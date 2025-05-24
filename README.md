@@ -1,81 +1,177 @@
-# 🛍️ Flipkart Product Scraper
-A robust Python-based web scraper that extracts detailed product information from Flipkart, including reviews, ratings, and categories for NLP. Built with Selenium for reliable automation.
+# 🛍️ Flipkart Product Scraper and Sentiment Analyzer
+
+A comprehensive Python project that combines web scraping and sentiment analysis to extract and analyze product information from Flipkart. Built with Selenium WebDriver for reliable automation and Transformers for sentiment analysis.
 
 ## ✨ Key Features
 
-- **Multi-Category Scraping**: Scrapes data from multiple product categories
-- **Parallel Processing**: Uses ThreadPoolExecutor for efficient scraping
+### Web Scraping
+
+- **Multi-Category Scraping**: Scrapes data from multiple product categories simultaneously
+- **Parallel Processing**: Uses ThreadPoolExecutor for efficient concurrent scraping (up to 10 workers)
 - **Rich Data Extraction**:
-    - Product titles and categories
-    - Star ratings and review counts
-    - Detailed user reviews (up to 50 per product)
-    - Product URLs for reference
-- **Anti-Detection Measures**: Implements headless browsing and automation detection bypass
-- **Rate Limiting**: Random delays between requests to prevent blocking
-- **CAPTCHA Detection**: Basic CAPTCHA detection to prevent invalid data collection
-- **CSV Export**: Automatically exports data to CSV format
+  - Product titles and categories
+  - Star ratings and review counts
+  - Detailed user reviews (up to 50 per product)
+  - Product URLs and search terms
+  - Breadcrumb navigation data
+- **Anti-Detection Measures**:
+  - Headless browser operation
+  - Automation detection bypass
+  - Random delays between requests (1.5-2.5 seconds)
+  - User-agent manipulation
+  - Window size simulation
+- **Error Handling**:
+  - CAPTCHA detection and graceful handling
+  - Connection error recovery
+  - Missing element handling
+- **Data Export**: Automatic CSV export with comprehensive product information
+
+### Sentiment Analysis
+
+- **Review Processing**: Analyzes customer reviews to determine sentiment
+- **Deep Learning Model**: Uses state-of-the-art transformer models for accurate sentiment classification
+- **Batch Processing**: Efficiently processes large volumes of reviews
+- **Sentiment Metrics**: Provides detailed sentiment scores and analysis
+- **Data Visualization**: Includes visualizations of sentiment distribution
+- **Category-wise Analysis**: Breaks down sentiment by product categories
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- **Python 3.7+**
-- **Chrome** browser installed
-- **Stable** internet connection
+- Python 3.7+
+- Google Chrome browser
+- Stable internet connection
+- At least 4GB RAM recommended
+- CUDA-compatible GPU (optional, for faster sentiment analysis)
+- Windows/Linux/MacOS supported
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
-git clone https://github.com/yourusername/flipkart-scraper.git
-cd flipkart-scraper
+git clone https://github.com/AungKyawWin20/Flipkart-Webscraping-Sentiment-Analysis.git
+cd Flipkart-Webscraping-Sentiment-Analysis
 ```
 
 2. Install required packages:
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### Usage
+### Required Dependencies
 
-Run the Script
+- selenium==latest
+- webdriver-manager==latest
+- pandas==latest
+- transformers==latest
+- torch==latest
+- numpy==latest
 
-```bash 
+## 🔧 Usage
+
+### Web Scraping
+
+1. Run the scraping script:
+
+```bash
 python Final_Code.py
 ```
 
-The script will scrape data for:
+2. The script will automatically scrape data for these categories:
 
-- Samsung Phones  
-- MacBooks  
-- Remote Control Cars  
-- Engine Oil  
-- Antidepressants
+   - Samsung Phones
+   - MacBooks
+   - Remote Control Cars
+   - Engine Oil
+   - Antidepressants
 
-## 📊 Output Format
-The script generates a `flipkart_scraped_data.csv` file with the following columns:
+3. Progress will be displayed in the console, showing:
+   - Current search term being processed
+   - Number of products found
+   - Review collection progress
+   - Any errors or CAPTCHA detections
 
-- Title
-- Star Rating
-- Rating Count
-- Category
-- Reviews (up to 50 reviews per product)
-- URL
-- Search Term
+### Sentiment Analysis
 
-## 🛠️ Technical Details
+1. Run the Jupyter notebook:
 
-Built with:
+```bash
+jupyter notebook Flipkart_Sentiment_Analysis.ipynb
+```
 
-- Selenium WebDriver for web automation
-- webdriver_manager for ChromeDriver management
-- pandas for data handling
-- ThreadPoolExecutor for concurrent scraping
+2. The notebook will:
+   - Load the scraped data
+   - Process and clean the reviews
+   - Perform sentiment analysis
+   - Generate visualizations and insights
 
-## ⚠️ Disclaimer
+## 📊 Output Files
 
-This tool is for educational purposes only. Please review Flipkart's terms of service and robots.txt before use. Be mindful of rate limiting and scraping policies.
+### Scraped Data (flipkart_scraped_data.csv)
+
+| Column       | Description                                   |
+| ------------ | --------------------------------------------- |
+| Title        | Product name                                  |
+| Star Rating  | Product rating (0-5 stars)                    |
+| Rating Count | Number of ratings received                    |
+| Category     | Product category from breadcrumb              |
+| Reviews      | Up to 50 reviews per product (pipe-separated) |
+| URL          | Product page URL                              |
+| Search Term  | Original search term used                     |
+
+### Sentiment Analysis (flipkart_data_with_sentiment.csv)
+
+- Original scraped data
+- Sentiment scores
+- Sentiment classifications
+- Category-wise sentiment distribution
+
+## 🛠️ Technical Implementation
+
+### Web Scraping
+
+- **Browser Automation**:
+
+  - Selenium WebDriver with Chrome in headless mode
+  - Automated ChromeDriver installation via webdriver_manager
+  - Custom Chrome options for anti-bot measures
+
+- **Concurrent Processing**:
+  - ThreadPoolExecutor for parallel product scraping
+  - Configurable worker pool (default: 10 workers)
+  - Automatic thread management and cleanup
+
+### Sentiment Analysis
+
+- **Model**: Transformer-based sequence classification
+- **Preprocessing**: Text cleaning and normalization
+- **Batch Processing**: Efficient handling of large datasets
+- **GPU Acceleration**: CUDA support for faster processing
+
+## ⚠️ Rate Limiting & Ethics
+
+- Random delays between requests (1.5-2.5 seconds)
+- CAPTCHA detection and graceful termination
+- Respects Flipkart's robots.txt
+- Limited to 50 reviews per product
+- Concurrent requests limited to 10
+
+## 🔍 Troubleshooting
+
+- **CAPTCHA Detection**: If encountered, the script will skip the current page and continue
+- **Missing Elements**: Gracefully handled with None values
+- **Network Issues**: Automatic retry mechanism for failed requests
+- **Memory Usage**: Close browser instances after each scrape
+- **Chrome Issues**: Ensure latest Chrome browser is installed
+- **GPU Memory**: Adjust batch size for sentiment analysis if running out of memory
 
 ## 📝 License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
+## ⚖️ Disclaimer
+
+This tool is for educational purposes only. Please review Flipkart's terms of service and robots.txt before use. Be mindful of rate limiting and scraping policies. Users are responsible for compliance with applicable laws and terms of service.
